@@ -61,7 +61,7 @@ namespace Shapes.API
             foundItem.NoOfAngles = item.NoOfAngles;
             foundItem.NoOfSides = item.NoOfSides;
             foundItem.AreaFormula = item.AreaFormula;
-            foundItem.PerimeerFormula = item.PerimeerFormula;
+            foundItem.PerimeterFormula = item.PerimeterFormula;
 
             return (Shape)foundItem;
         }
@@ -107,7 +107,7 @@ namespace Shapes.API
                     Family = "Rectangle, Rhombus",
                     AdditionalInformation = "All squares are also parallelograms.",
                     AreaFormula = "width * 4;",
-                    PerimeerFormula = "width * 4;"
+                    PerimeterFormula = "width * 4;"
                 },
                 new Shape
                 {
@@ -117,7 +117,7 @@ namespace Shapes.API
                     NoOfSides = 3,
                     AdditionalInformation = "There are different kinds of Triangle",
                     AreaFormula = "(b * h) / 2",
-                    PerimeerFormula = "(b + (h * 2))"
+                    PerimeterFormula = "(b + (h * 2))"
                 },
                 new Shape
                 {
@@ -127,7 +127,7 @@ namespace Shapes.API
                     NoOfAngles = 0,
                     AdditionalInformation = "Circles have a point in the centre from which each point on the diameter is equidistant.",
                     AreaFormula = "(3.14 * (r * r))",
-                    PerimeerFormula = "(2 * 3.14 * r)"
+                    PerimeterFormula = "(2 * 3.14 * r)"
                 }
             };
 

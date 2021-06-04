@@ -23,7 +23,7 @@ namespace Shapes.API.Models.Shapes
 
         public string AreaFormula { get; set; }
 
-        public string PerimeerFormula { get; set; }
+        public string PerimeterFormula { get; set; }
 
         public string AdditionalInformation { get; set; }
     }

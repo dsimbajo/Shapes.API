@@ -19,7 +19,7 @@ namespace Shapes.API.Models.Shapes
         public string Family { get; set; }
         public string AdditionalInformation { get; set; }
         public string AreaFormula { get; set; }
-        public string PerimeerFormula { get; set; }
+        public string PerimeterFormula { get; set; }
 
         public float ComputeArea(Dictionary<string,object> parameters)
         {
@@ -33,7 +33,7 @@ namespace Shapes.API.Models.Shapes
         public float ComputePerimeter(Dictionary<string, object> parameters)
         {
             //TODO: Should be dependency injected
-            var computeService = new ComputationService(AreaFormula, parameters);
+            var computeService = new ComputationService(PerimeterFormula, parameters);
 
             return computeService.Compute();
         }
