@@ -12,16 +12,22 @@ namespace Shapes.API.Tests
     [TestClass]
     public class ShapesAPITests
     {
+        private readonly ShapesController _shapesController;
+
+        public ShapesAPITests()
+        {
+            var shapesRepository = new ShapesRepository();
+            var computationService = new ComputationService();
+            _shapesController = new ShapesController(shapesRepository, computationService);
+        }
+
         [TestMethod]
         public void ShapesAPI_GetSquareInformation_With_Provided_Width()
         {
-            var repository = new ShapesRepository();
-
-            var controller = new ShapesController(repository);
 
             int width = 4;
 
-            var result = controller.GetSquareInformation(width) as OkObjectResult;
+            var result = _shapesController.GetSquareInformation(width) as OkObjectResult;
 
             var square = (ShapeResponse)result.Value;
 
@@ -33,13 +39,10 @@ namespace Shapes.API.Tests
         [TestMethod]
         public void ShapesAPI_GetSquareInformation_Without_Width()
         {
-            var repository = new ShapesRepository();
-
-            var controller = new ShapesController(repository);
 
             int width = 0;
 
-            var result = controller.GetSquareInformation(width) as OkObjectResult;
+            var result = _shapesController.GetSquareInformation(width) as OkObjectResult;
 
             var square = (ShapeResponse)result.Value;
 
@@ -51,16 +54,11 @@ namespace Shapes.API.Tests
         [TestMethod]
         public void ShapesAPI_GetTriangleInformation_With_Provided_BaseAndHeight()
         {
-            var repository = new ShapesRepository();
-
-            var controller = new ShapesController(repository);
 
             int shapeBase = 4;
             int shapeHeight = 12;
 
-
-
-            var result = controller.GetTriangleInformation(shapeBase,shapeHeight) as OkObjectResult;
+            var result = _shapesController.GetTriangleInformation(shapeBase, shapeHeight) as OkObjectResult;
 
             var triangle = (ShapeResponse)result.Value;
 
@@ -72,32 +70,17 @@ namespace Shapes.API.Tests
         [TestMethod]
         public void ShapesAPI_GetTriangleInformation_Without_BaseAndHeight()
         {
-            var repository = new ShapesRepository();
-
-            var controller = new ShapesController(repository);
 
             int shapeBase = 0;
             int shapeHeight = 0;
 
-
-
-            var result = controller.GetTriangleInformation(shapeBase, shapeHeight) as OkObjectResult;
+            var result = _shapesController.GetTriangleInformation(shapeBase, shapeHeight) as OkObjectResult;
 
             var triangle = (ShapeResponse)result.Value;
 
             Assert.IsNotNull(triangle);
             Assert.AreEqual(triangle.Area, 0);
             Assert.AreEqual(triangle.Perimeter, 0);
-        }
-
-        [TestMethod]
-        public void Test()
-        {
-
-
-            float result = Eval.Execute<float>("X + X", new { X = 2 });
-
-
         }
 
     }

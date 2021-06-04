@@ -4,12 +4,20 @@
         <name>Shapes.API</name>
     </assembly>
     <members>
+        <member name="M:Shapes.API.ComputationService.Compute(System.String,System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            Computes the formula and returns float value
+            </summary>
+            <param name="formula">Specified formula to be evaluated and executed</param>
+            <param name="variables">Values of the variables to be used in the formula</param>
+            <returns></returns>
+        </member>
         <member name="T:Shapes.API.Controllers.ShapesController">
             <summary>
              API to calculate area and perimeter of the shape
             </summary>
         </member>
-        <member name="M:Shapes.API.Controllers.ShapesController.#ctor(Shapes.API.ShapesRepository)">
+        <member name="M:Shapes.API.Controllers.ShapesController.#ctor(Shapes.API.ShapesRepository,Shapes.API.ComputationService)">
             <summary>
             
             </summary>
@@ -33,7 +41,7 @@
             <summary>
             Endpoint to add new shape to database
             </summary>
-            <param name="shape"></param>
+            <param name="shape">You can add your own formula for area and perimeter on the shape by using variables a, b, c and with initial value of 0 e.g. (a + b + c)</param>
             <returns></returns>
         </member>
         <member name="M:Shapes.API.Controllers.ShapesController.Put(System.Guid,Shapes.API.Models.Shapes.Shape)">
@@ -71,6 +79,89 @@
             </summary>
             <param name="radius"></param>
             <returns></returns>
+        </member>
+        <member name="M:Shapes.API.Controllers.ShapesController.GetShapeInformation(Shapes.API.Models.Shapes.ShapeRequest)">
+            <summary>
+            Get other shape information that was added on the database
+            </summary>
+            <param name="request">Supply name of the shape added on the database, and the values of the variables for area and perimeter formula </param>
+            <returns></returns>
+        </member>
+        <member name="P:Shapes.API.Models.Shapes.ShapeRequest.Name">
+            <summary>
+            Name of the shape registered on database
+            </summary>
+        </member>
+        <member name="P:Shapes.API.Models.Shapes.ShapeRequest.VariableA">
+            <summary>
+            Value of variable (a) on area or perimeter formula
+            </summary>
+        </member>
+        <member name="P:Shapes.API.Models.Shapes.ShapeRequest.VariableB">
+            <summary>
+            Value of variable (b) on area or perimeter formula
+            </summary>
+        </member>
+        <member name="P:Shapes.API.Models.Shapes.ShapeRequest.VariableC">
+            <summary>
+            Value of variable (c) on area or perimeter formula
+            </summary>
+        </member>
+        <member name="P:Shapes.API.Models.Shapes.Shape.Id">
+            <summary>
+            Shape Id 
+            </summary>
+        </member>
+        <member name="P:Shapes.API.Models.Shapes.Shape.Name">
+            <summary>
+            Shape Name registered on database
+            </summary>
+        </member>
+        <member name="P:Shapes.API.Models.Shapes.Shape.NoOfSides">
+            <summary>
+            No of Sides
+            </summary>
+        </member>
+        <member name="P:Shapes.API.Models.Shapes.Shape.NoOfAngles">
+            <summary>
+            No of Angles
+            </summary>
+        </member>
+        <member name="P:Shapes.API.Models.Shapes.Shape.Family">
+            <summary>
+            Shape of family, can be null
+            </summary>
+        </member>
+        <member name="P:Shapes.API.Models.Shapes.Shape.AdditionalInformation">
+            <summary>
+            Additional Information about the shape
+            </summary>
+        </member>
+        <member name="P:Shapes.API.Models.Shapes.Shape.AreaFormula">
+            <summary>
+            Formula for computing shape area in string format, mathematical symbols are not allowed such as Pi or square root
+            </summary>
+        </member>
+        <member name="P:Shapes.API.Models.Shapes.Shape.PerimeterFormula">
+            <summary>
+            Formula for computing shape perimeter in string format, mathematical symbols are not allowed such as Pi or square root
+            </summary>
+        </member>
+        <member name="P:Shapes.API.Models.Shapes.Shape.Variables">
+            <summary>
+            Collection of variables used in area and perimeter formula
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:Shapes.API.Models.ShapeResponse.Information" -->
+        <member name="P:Shapes.API.Models.ShapeResponse.Area">
+            <summary>
+            Result of computing area
+            </summary>
+        </member>
+        <member name="P:Shapes.API.Models.ShapeResponse.Perimeter">
+            <summary>
+            Result of computing perimeter
+            </summary>
         </member>
     </members>
 </doc>

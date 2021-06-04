@@ -38,6 +38,7 @@ namespace Shapes.API
 
             });
 
+            services.AddSingleton<ComputationService>();
 
             services.AddSingleton<ShapesRepository>();
 

@@ -8,18 +8,15 @@ namespace Shapes.API
 {
     public class ComputationService
     {
-        private readonly string _formula;
-        private readonly Dictionary<string, object> _variables;
-
-        public ComputationService(string formula, Dictionary<string, object> variables)
+        /// <summary>
+        /// Computes the formula and returns float value
+        /// </summary>
+        /// <param name="formula">Specified formula to be evaluated and executed</param>
+        /// <param name="variables">Values of the variables to be used in the formula</param>
+        /// <returns></returns>
+        public float Compute(string formula, Dictionary<string, object> variables)
         {
-            _formula = formula;
-            _variables = variables;
-        }
-
-        public float Compute()
-        {
-            return Eval.Execute<float>(_formula, _variables);
+            return Eval.Execute<float>(formula, variables);
         }
 
 

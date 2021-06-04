@@ -7,14 +7,25 @@ namespace Shapes.API.Models.Shapes
 {
     public class ShapeRequest
     {
-        public float Height { get; set; }
+        /// <summary>
+        /// Name of the shape registered on database
+        /// </summary>
+        public string Name { get; set; }
 
-        public float Width { get; set; }
+        /// <summary>
+        /// Value of variable (a) on area or perimeter formula
+        /// </summary>
+        public float VariableA { get; set; }
 
-        public float Diameter { get; set; }
+        /// <summary>
+        /// Value of variable (b) on area or perimeter formula
+        /// </summary>
+        public float VariableB { get; set; }
 
-        public float Radius { get; set; }
-
+        /// <summary>
+        /// Value of variable (c) on area or perimeter formula
+        /// </summary>
+        public float VariableC { get; set; }
 
     }
 }

@@ -14,11 +14,11 @@ namespace Shapes.API.Tests
             var formula = "3.14 * (r * r)";
             var variables = new Dictionary<string, object> { { "r", 12 } };
 
-            var computeService = new ComputationService(formula, variables);
+            var computeService = new ComputationService();
 
-            var result = computeService.Compute();
+            float result = computeService.Compute(formula, variables);
 
-            Assert.AreEqual(result, 452.16);
+            Assert.AreEqual(Math.Round(result,2), 452.16);
         }
 
     }

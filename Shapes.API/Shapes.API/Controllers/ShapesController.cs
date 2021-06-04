@@ -17,14 +17,16 @@ namespace Shapes.API.Controllers
     public class ShapesController : ControllerBase
     {
         private readonly ShapesRepository _shapesRepository;
+        private readonly ComputationService _computationService;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="shapesRepository"></param>
-        public ShapesController(ShapesRepository shapesRepository)
+        public ShapesController(ShapesRepository shapesRepository, ComputationService computationService)
         {
             _shapesRepository = shapesRepository;
+            _computationService = computationService;
         }
 
         /// <summary>
@@ -63,14 +65,24 @@ namespace Shapes.API.Controllers
         /// <summary>
         /// Endpoint to add new shape to database
         /// </summary>
-        /// <param name="shape"></param>
+        /// <param name="shape">You can add your own formula for area and perimeter on the shape by using variables a, b, c and with initial value of 0 e.g. (a + b + c)</param>
         /// <returns></returns>
         [HttpPost]
         public IActionResult Post([FromBody] Shape shape)
         {
-            var newShape = _shapesRepository.Add(shape);
+            try
+            {
+                var newShape = _shapesRepository.Add(shape);
 
-            return Created("/shape",newShape);
+                return Created("/shape", newShape);
+            }
+            catch (Exception ex)
+            {
+
+                return Problem(detail: ex.Message, "Adding Shape Error");
+            }
+
+           
         }
 
         /// <summary>
@@ -82,17 +94,25 @@ namespace Shapes.API.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(Guid id, [FromBody] Shape shape)
         {
-            var foundShape = _shapesRepository.GetById(id);
-
-            if (foundShape == null)
+            try
             {
-                return NotFound();
+                var foundShape = _shapesRepository.GetById(id);
+
+                if (foundShape == null)
+                {
+                    return NotFound();
+                }
+
+                var updatedShape = _shapesRepository.Update(id, shape);
+
+                return Ok(updatedShape);
             }
+            catch (Exception ex)
+            {
 
-            
-            var updatedShape = _shapesRepository.Update(id,shape);
-
-            return Ok(updatedShape);
+                return Problem(detail: ex.Message, "Adding Shape Error");
+            }
+          
 
         }
 
@@ -118,13 +138,13 @@ namespace Shapes.API.Controllers
             {
                 var square = _shapesRepository.GetByName("Square");
 
-                var variables = new Dictionary<string, object> { { "width", width } };
+                square.Variables["width"] = width;
 
                 var response = new ShapeResponse
                 {
                     Information = square,
-                    Area = width == 0 ? 0 : square.ComputeArea(variables),
-                    Perimeter = width == 0 ? 0 : square.ComputePerimeter(variables)
+                    Area = width == 0 ? 0 : _computationService.Compute(square.AreaFormula,square.Variables),
+                    Perimeter = width == 0 ? 0 : _computationService.Compute(square.PerimeterFormula, square.Variables)
                 };
 
                 return Ok(response);
@@ -153,13 +173,14 @@ namespace Shapes.API.Controllers
             {
                 var triangle = _shapesRepository.GetByName("Triangle");
 
-                var variables = new Dictionary<string, object> { { "b", shapeBase }, { "h", height } };
+                triangle.Variables["b"] = shapeBase;
+                triangle.Variables["h"] = height;
 
                 var response = new ShapeResponse
                 {
                     Information = triangle,
-                    Area = (shapeBase == 0 && height == 0) ? 0 : triangle.ComputeArea(variables),
-                    Perimeter = (shapeBase == 0 && height == 0) ? 0 : triangle.ComputePerimeter(variables)
+                    Area = (shapeBase == 0 && height == 0) ? 0 : _computationService.Compute(triangle.AreaFormula, triangle.Variables),
+                    Perimeter = (shapeBase == 0 && height == 0) ? 0 : _computationService.Compute(triangle.PerimeterFormula, triangle.Variables)
                 };
 
                 return Ok(response);
@@ -187,14 +208,13 @@ namespace Shapes.API.Controllers
             {
                 var circle = _shapesRepository.GetByName("Circle");
 
-
-                var variables = new Dictionary<string, object> { { "r", radius } };
+                circle.Variables["r"] = radius;
 
                 var response = new ShapeResponse
                 {
                     Information = circle,
-                    Area = (radius == 0) ? 0 : circle.ComputeArea(variables),
-                    Perimeter = (radius == 0) ? 0 : circle.ComputePerimeter(variables)
+                    Area = (radius == 0) ? 0 : _computationService.Compute(circle.AreaFormula, circle.Variables),
+                    Perimeter = (radius == 0) ? 0 : _computationService.Compute(circle.PerimeterFormula, circle.Variables)
                 };
 
                 return Ok(response);
@@ -207,6 +227,41 @@ namespace Shapes.API.Controllers
                 return Problem(detail: ex.Message, statusCode: 500);
             }
 
+
+        }
+
+        /// <summary>
+        /// Get other shape information that was added on the database
+        /// </summary>
+        /// <param name="request">Supply name of the shape added on the database, and the values of the variables for area and perimeter formula </param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("shape")]
+        public IActionResult GetShapeInformation([FromBody] ShapeRequest request)
+        {
+            try
+            {
+                var shape = _shapesRepository.GetByName(request.Name);
+
+                shape.Variables["a"] = request.VariableA;
+                shape.Variables["b"] = request.VariableB;
+                shape.Variables["c"] = request.VariableC;
+
+                var response = new ShapeResponse
+                {
+                    Information = shape,
+                    Area = _computationService.Compute(shape.AreaFormula, shape.Variables),
+                    Perimeter = _computationService.Compute(shape.PerimeterFormula, shape.Variables)
+                };
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+
+                return Problem(detail: ex.Message, statusCode: 500);
+            }
+           
 
         }
     }

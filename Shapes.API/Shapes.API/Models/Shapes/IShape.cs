@@ -7,10 +7,6 @@ namespace Shapes.API.Models.Shapes
 {
     public interface IShape
     {
-        float ComputeArea(Dictionary<string, object> parameters);
-
-        float ComputePerimeter(Dictionary<string, object> parameters);
-
         public Guid Id { get; set; }
 
         public string Name { get; set; }

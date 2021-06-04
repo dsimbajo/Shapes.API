@@ -37,17 +37,17 @@ namespace Shapes.API
 
         public IEnumerable<Shape> GetAll()
         {
-            return ShapeContext.Shapes.ToList() as IEnumerable<Shape>;
+            return ShapeContext.Shapes.ToList();
         }
 
         public Shape GetById(Guid id)
         { 
-            return ShapeContext.Shapes.Where(s => s.Id == id).FirstOrDefault() as Shape;
+            return ShapeContext.Shapes.Where(s => s.Id == id).FirstOrDefault();
         }
 
         public Shape GetByName(string name)
         {
-            return ShapeContext.Shapes.Find(s => s.Name == name) as Shape;
+            return ShapeContext.Shapes.Find(s => s.Name == name);
         }
 
         public Shape Update(Guid id, Shape item)
@@ -63,74 +63,9 @@ namespace Shapes.API
             foundItem.AreaFormula = item.AreaFormula;
             foundItem.PerimeterFormula = item.PerimeterFormula;
 
-            return (Shape)foundItem;
+            return foundItem;
         }
 
      
-    }
-
-    public static class ShapeContext
-    {
-        private static List<IShape> _shapesContext = null;
-
-        public static List<IShape> Shapes 
-        { 
-            get 
-            { 
-                {
-                    if (_shapesContext == null)
-                    {
-                        _shapesContext = GetShapes();
-
-                        return _shapesContext;
-                    }
-                    else
-                    {
-                        return _shapesContext;
-                    }
-                }
-            } 
- 
-        }
-
-        private static List<IShape> GetShapes()
-        {
-
-            return new List<IShape>
-            {
-                new Shape
-                {
-                    Id = Guid.Parse("eb599282-b172-4841-9607-69d80826e8c8"),
-                    Name = "Square",
-                    NoOfAngles = 4,
-                    NoOfSides = 4,
-                    Family = "Rectangle, Rhombus",
-                    AdditionalInformation = "All squares are also parallelograms.",
-                    AreaFormula = "width * 4;",
-                    PerimeterFormula = "width * 4;"
-                },
-                new Shape
-                {
-                    Id = Guid.NewGuid(),
-                    Name ="Triangle",
-                    NoOfAngles = 3,
-                    NoOfSides = 3,
-                    AdditionalInformation = "There are different kinds of Triangle",
-                    AreaFormula = "(b * h) / 2",
-                    PerimeterFormula = "(b + (h * 2))"
-                },
-                new Shape
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "Circle",
-                    NoOfSides = 0,
-                    NoOfAngles = 0,
-                    AdditionalInformation = "Circles have a point in the centre from which each point on the diameter is equidistant.",
-                    AreaFormula = "(3.14 * (r * r))",
-                    PerimeterFormula = "(2 * 3.14 * r)"
-                }
-            };
-
-        }
     }
 }
