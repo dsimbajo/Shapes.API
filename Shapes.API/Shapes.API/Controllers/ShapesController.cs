@@ -6,22 +6,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Shapes.API.Controllers
 {
+    /// <summary>
+    ///  API to calculate area and perimeter of the shape
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class ShapesController : ControllerBase
     {
         private readonly ShapesRepository _shapesRepository;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="shapesRepository"></param>
         public ShapesController(ShapesRepository shapesRepository)
         {
             _shapesRepository = shapesRepository;
         }
 
-        // GET: api/<ShapesController>
+        /// <summary>
+        /// Endpoint to fetch all shapes
+        /// </summary>
+        /// <param name="shapeRequest"></param>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Get([FromBody] ShapeRequest shapeRequest)
         {
@@ -30,7 +40,11 @@ namespace Shapes.API.Controllers
             return Ok(shapes);
         }
 
-        // GET api/<ShapesController>/5
+        /// <summary>
+        /// Endpoint to fetch specific shape by Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public IActionResult Get(Guid id)
         {
@@ -46,16 +60,25 @@ namespace Shapes.API.Controllers
             }
         }
 
-        // POST api/<ShapesController>
+        /// <summary>
+        /// Endpoint to add new shape to database
+        /// </summary>
+        /// <param name="shape"></param>
+        /// <returns></returns>
         [HttpPost]
-        public ActionResult Post([FromBody] Shape shape)
+        public IActionResult Post([FromBody] Shape shape)
         {
             var newShape = _shapesRepository.Add(shape);
 
             return Created("/shape",newShape);
         }
 
-        // PUT api/<ShapesController>/5
+        /// <summary>
+        /// Endpoint to update specific shape in database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="shape"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public IActionResult Put(Guid id, [FromBody] Shape shape)
         {
@@ -73,12 +96,20 @@ namespace Shapes.API.Controllers
 
         }
 
-        // DELETE api/<ShapesController>/5
+        /// <summary>
+        /// Endpoint to delete specific shape by Id
+        /// </summary>
+        /// <param name="id"></param>
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
         }
 
+        /// <summary>
+        /// Endpoint to compute square area and perimeter and retrieve information
+        /// </summary>
+        /// <param name="width"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("square")]
         public IActionResult GetSquareInformation(float width)
@@ -108,6 +139,12 @@ namespace Shapes.API.Controllers
          
         }
 
+        /// <summary>
+        /// Endpoint to compute triangle area and perimeter and retrieve information
+        /// </summary>
+        /// <param name="shapeBase"></param>
+        /// <param name="height"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("triangle")]
         public ActionResult GetTriangleInformation(float shapeBase, float height)
@@ -137,6 +174,11 @@ namespace Shapes.API.Controllers
 
         }
 
+        /// <summary>
+        /// Endpoint to compute circle area and perimeter and retrieve information
+        /// </summary>
+        /// <param name="radius"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("circle")]
         public ActionResult GetCircleInformation(float radius)

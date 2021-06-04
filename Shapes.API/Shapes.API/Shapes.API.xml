@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Shapes.API</name>
+    </assembly>
+    <members>
+        <member name="T:Shapes.API.Controllers.ShapesController">
+            <summary>
+             API to calculate area and perimeter of the shape
+            </summary>
+        </member>
+        <member name="M:Shapes.API.Controllers.ShapesController.#ctor(Shapes.API.ShapesRepository)">
+            <summary>
+            
+            </summary>
+            <param name="shapesRepository"></param>
+        </member>
+        <member name="M:Shapes.API.Controllers.ShapesController.Get(Shapes.API.Models.Shapes.ShapeRequest)">
+            <summary>
+            Endpoint to fetch all shapes
+            </summary>
+            <param name="shapeRequest"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Shapes.API.Controllers.ShapesController.Get(System.Guid)">
+            <summary>
+            Endpoint to fetch specific shape by Id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Shapes.API.Controllers.ShapesController.Post(Shapes.API.Models.Shapes.Shape)">
+            <summary>
+            Endpoint to add new shape to database
+            </summary>
+            <param name="shape"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Shapes.API.Controllers.ShapesController.Put(System.Guid,Shapes.API.Models.Shapes.Shape)">
+            <summary>
+            Endpoint to update specific shape in database
+            </summary>
+            <param name="id"></param>
+            <param name="shape"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Shapes.API.Controllers.ShapesController.Delete(System.Int32)">
+            <summary>
+            Endpoint to delete specific shape by Id
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:Shapes.API.Controllers.ShapesController.GetSquareInformation(System.Single)">
+            <summary>
+            Endpoint to compute square area and perimeter and retrieve information
+            </summary>
+            <param name="width"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Shapes.API.Controllers.ShapesController.GetTriangleInformation(System.Single,System.Single)">
+            <summary>
+            Endpoint to compute triangle area and perimeter and retrieve information
+            </summary>
+            <param name="shapeBase"></param>
+            <param name="height"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Shapes.API.Controllers.ShapesController.GetCircleInformation(System.Single)">
+            <summary>
+            Endpoint to compute circle area and perimeter and retrieve information
+            </summary>
+            <param name="radius"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

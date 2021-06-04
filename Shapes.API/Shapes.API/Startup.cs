@@ -9,7 +9,9 @@ using Microsoft.Extensions.Logging;
 using Shapes.API.Repository;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Shapes.API
@@ -29,11 +31,14 @@ namespace Shapes.API
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Shapes API", Version = "v1" });
+
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+
             });
 
-            //var shapeContext = new ShapeContext();
-
-            //services.AddSingleton<ShapeContext>(shapeContext);
 
             services.AddSingleton<ShapesRepository>();
 
